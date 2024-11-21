@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:17:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/21 17:51:11 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:36:28 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ char	*ft_error(char *buffer, char *rest)
 	return (NULL);
 }
 
-char	*ft_return(char **rest)
+char	*ft_return(char *rest)
 {
 	char *res;
 	int	i;
 
-	i = ft_strchr(*rest, '\n');
+	i = ft_strchr(rest, '\n');
 	if ( i == -1)
-		i = ft_strchr(*rest, '\0') - 1;
+		i = ft_strchr(rest, '\0') - 1;
 	res = "";
-	res = ft_strjoin(res, *rest, i + 1);
-	*rest = *rest + i + 1;
+	res = ft_strjoin(res, rest, i + 1);
+	rest = rest + i + 1;
 	return (res);
 }
 
@@ -45,12 +45,12 @@ char	*get_next_line(int fd)
 	while (ft_strchr(rest, '\n') == -1)
 	{
 		byte_r = read(fd, buffer, BUFFER_SIZE);
-		if (byte_r == -1 || (byte_r == 0 && !rest))
+		if (byte_r == -1 || (byte_r == 0 && rest[0] == 0))
 			return (ft_error(buffer, rest));
 		else if (byte_r == 0)
 			break;
 		rest = ft_strjoin(rest, buffer, BUFFER_SIZE);
 	}
 	free(buffer);
-	return (ft_return(&rest));
+	return (ft_return(rest));
 }
