@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:51:11 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/20 14:10:19 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:15:57 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,17 @@
 int main(void) 
 {
 	int	fd;
+	char *test;
+	int	i;
 
+	i = -1;
 	fd = open("test", O_RDONLY);
-    printf("%s", get_next_line(fd));
+	while (++i < 10)
+	{
+		test = get_next_line(fd);
+		printf("%s", test);
+		free(test);
+	}
 	close(fd);
-    return 0;
+	return 0;
 }

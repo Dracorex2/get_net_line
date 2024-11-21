@@ -3,41 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:17:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/20 15:40:22 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:51:11 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 42
-
-static void	*ft_error(char **buffer, char **rest, char **res)
+char	*ft_error(char *buffer, char *rest)
 {
+	free(buffer);
+	free(rest);
+	return (NULL);
+}
 
+char	*ft_return(char **rest)
+{
+	char *res;
+	int	i;
+
+	i = ft_strchr(*rest, '\n');
+	if ( i == -1)
+		i = ft_strchr(*rest, '\0') - 1;
+	res = "";
+	res = ft_strjoin(res, *rest, i + 1);
+	*rest = *rest + i + 1;
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
 	int			byte_r;
 	char		*buffer;
-	static char	*rest;
-	int			i;
-	char		*res;
+	static char	*rest = NULL;
 
-	i = 0;
+	if (!fd || BUFFER_SIZE < 1)
+		return (NULL);
 	buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1);
-	res = "";
-	while (byte_r || !ft_strchr(res, '\n'))
+	while (ft_strchr(rest, '\n') == -1)
 	{
 		byte_r = read(fd, buffer, BUFFER_SIZE);
-		if (byte_r == -1)
-			return (ft_error(&buffer, &rest, &res));
-		res = ft_strjoin(res, buffer, ft_strchr(buffer, '\n'));
+		if (byte_r == -1 || (byte_r == 0 && !rest))
+			return (ft_error(buffer, rest));
+		else if (byte_r == 0)
+			break;
+		rest = ft_strjoin(rest, buffer, BUFFER_SIZE);
 	}
-	
-	read(fd, buffer, BUFFER_SIZE);
-	return (0);
+	free(buffer);
+	return (ft_return(&rest));
 }

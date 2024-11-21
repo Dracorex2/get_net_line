@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:27 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/20 13:36:34 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:26:44 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-char	*ft_strjoin(char const *s1, char const *s2, int n);
-int     ft_strchr(const char *s, char c);
-void	ft_strlcpy(char *dst, const char *src, size_t size);
-char    *get_next_line(int fd);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*ft_strjoin(char *s1, char *s2, int n);
+void	ft_strlcpy(char *dst, char *src, size_t size);
+char	*get_next_line(int fd);
+int		ft_strchr(char *s, char c);
 
 #endif

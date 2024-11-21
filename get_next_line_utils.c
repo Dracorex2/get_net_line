@@ -3,32 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucmansa <lucmansa@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:44 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/20 15:32:10 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:09:22 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int ft_strchr(const char *s, char c)
+int	ft_strchr (char *s, char c)
 {
 	int	i;
 
 	i = 0;
-    if (!s || s[0] == 0)
-        return (0);
-	while (s[i] != c)
+	if (!s)
+		return (-1);
+	while (s[i])
 	{
-		if (s[i] == 0 && c != 0)
-			return (0);
+		if (s[i] == c)
+			return (i);
 		i++;
 	}
-	return (i);
+	if (s[i] == c)
+			return (i);
+	return (-1);
 }
 
-void	ft_strlcpy(char *dst, const char *src, size_t size)
+void	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t	i;
 
@@ -41,17 +43,23 @@ void	ft_strlcpy(char *dst, const char *src, size_t size)
 	}
 }
 
-char	*ft_strjoin(char const *s1, char const *s2, int n)
+char	*ft_strjoin(char *s1, char *s2, int n)
 {
 	char	*res;
-	int	len;
+	int		len;
 	int		i;
 
 	i = 0;
+	if (!s1)
+	{
+		res = malloc(sizeof(char) * n + 1);
+		ft_strlcpy(res, s2, n + 1);
+		return (res);
+	}
 	len = ft_strchr(s1, '\0') + n;
 	res = malloc(sizeof(char) * len + 1);
 	if (!res)
-		return (0);
+		return (NULL);
 	ft_strlcpy(res, s1, ft_strchr(s1, '\0') + 1);
 	while (res[i])
 		i++;
