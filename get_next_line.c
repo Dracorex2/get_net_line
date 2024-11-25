@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:17:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/25 18:59:25 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:41:04 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	static char	*rest = NULL;
 
-	if (!fd || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1);
 	while (ft_strchr(rest, '\n') == -1)
