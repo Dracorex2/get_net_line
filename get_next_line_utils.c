@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:44 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/21 19:34:50 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:39:33 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ char	*ft_strjoin(char *s1, char *s2, int n)
 	while (res[i])
 		i++;
 	ft_strlcpy(&res[i], s2, n + 1);
+	free(s1);
 	return (res);
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*i;
-	int		j;
+	size_t		j;
 
 	i = malloc(nmemb * size);
 	if (!i)

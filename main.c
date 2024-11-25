@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:51:11 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/21 19:37:58 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:11:24 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(void)
 
 	i = -1;
 	fd = open("test", O_RDONLY);
-	while (++i < 10)
+	while (++i < 4)
 	{
 		test = get_next_line(fd);
 		printf("%s", test);

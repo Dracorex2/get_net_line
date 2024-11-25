@@ -6,30 +6,35 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:17:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/21 19:36:28 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:59:25 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_error(char *buffer, char *rest)
+char	*ft_return(char **rest)
 {
-	free(buffer);
-	free(rest);
-	return (NULL);
-}
+	char 	*res;
+	int		i;
+	char	*tmp;
+	int		end;
 
-char	*ft_return(char *rest)
-{
-	char *res;
-	int	i;
-
-	i = ft_strchr(rest, '\n');
+	if(!rest)
+		return(NULL);
+	end = 0;
+	i = ft_strchr(*rest, '\n');
 	if ( i == -1)
-		i = ft_strchr(rest, '\0') - 1;
-	res = "";
-	res = ft_strjoin(res, rest, i + 1);
-	rest = rest + i + 1;
+	{
+		end = -1;
+		i = ft_strchr(*rest, '\0') - 1;
+	}
+	res = ft_strjoin(NULL, *rest, i + 1);
+	tmp = *rest;
+	*rest = ft_strjoin(NULL, *rest + i + 1, ft_strchr(*rest + i + 1, '\0'));
+	if (!end)
+		free(tmp);
+	if (end == -1)
+		free(*rest);
 	return (res);
 }
 
@@ -45,12 +50,14 @@ char	*get_next_line(int fd)
 	while (ft_strchr(rest, '\n') == -1)
 	{
 		byte_r = read(fd, buffer, BUFFER_SIZE);
-		if (byte_r == -1 || (byte_r == 0 && rest[0] == 0))
-			return (ft_error(buffer, rest));
+		buffer[byte_r] = 0 ;
+		if (byte_r == -1 || (byte_r == 0 && !rest)
+			|| (byte_r == 0 && rest[0] == 0))
+			return (free(buffer), NULL);
 		else if (byte_r == 0)
 			break;
-		rest = ft_strjoin(rest, buffer, BUFFER_SIZE);
+		rest = ft_strjoin(rest, buffer, byte_r);
 	}
 	free(buffer);
-	return (ft_return(rest));
+	return (ft_return(&rest));
 }
