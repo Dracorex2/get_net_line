@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:17:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/26 17:19:59 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:07:21 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ char	*get_next_line(int fd)
 	{
 		byte_r = read(fd, buffer, BUFFER_SIZE);
 		if (byte_r < 0)
+		{
+			if (rest)
+			{
+				free(rest);
+				rest = NULL;
+			}
 			return (free(buffer), NULL);
+		}
 		buffer[byte_r] = 0 ;
 		if ((byte_r == 0 && !rest) || (byte_r == 0 && rest[0] == 0))
 			return (free(buffer), free(rest), rest = NULL, NULL);
