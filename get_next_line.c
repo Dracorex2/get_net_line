@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:17:21 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/26 18:07:21 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:06:34 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 char	*ft_return(char **rest)
 {
-	char 	*res;
+	char	*res;
 	int		i;
 	char	*tmp;
 
-	if(!*rest)
-		return(NULL);
+	if (!(*rest))
+		return (NULL);
 	i = ft_strchr(*rest, '\n');
-	if ( i == -1)
+	if (i == -1)
 		i = ft_strchr(*rest, '\0') - 1;
 	res = ft_strjoin(NULL, *rest, i + 1);
 	tmp = *rest;
@@ -30,15 +30,11 @@ char	*ft_return(char **rest)
 	return (res);
 }
 
-char	*get_next_line(int fd)
+char	*ft_boucle(int fd, char *rest)
 {
-	int			byte_r;
-	char		*buffer;
-	static char	*rest = NULL;
-	char 		*res;
+	char	*buffer;
+	int		byte_r;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (NULL);
 	buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1);
 	while (ft_strchr(rest, '\n') == -1)
 	{
@@ -56,10 +52,21 @@ char	*get_next_line(int fd)
 		if ((byte_r == 0 && !rest) || (byte_r == 0 && rest[0] == 0))
 			return (free(buffer), free(rest), rest = NULL, NULL);
 		else if (byte_r == 0)
-			break;
+			break ;
 		rest = ft_strjoin(rest, buffer, byte_r);
 	}
 	free(buffer);
+	return (rest);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*rest = NULL;
+	char		*res;
+
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
+	rest = ft_boucle(fd, rest);
 	res = ft_return(&rest);
 	if (ft_strchr(res, '\n') == -1)
 		return (free(rest), rest = NULL, res);

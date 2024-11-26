@@ -6,13 +6,13 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:44 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/26 17:12:13 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:07:06 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr (char *s, char c)
+int	ft_strchr(char *s, char c)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	ft_strchr (char *s, char c)
 		i++;
 	}
 	if (s[i] == c)
-			return (i);
+		return (i);
 	return (-1);
 }
 
@@ -71,7 +71,7 @@ char	*ft_strjoin(char *s1, char *s2, int n)
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*i;
-	size_t		j;
+	size_t	j;
 
 	i = malloc(nmemb * size);
 	if (!i)
