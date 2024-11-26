@@ -6,7 +6,7 @@
 /*   By: lucmansa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:44 by lucmansa          #+#    #+#             */
-/*   Updated: 2024/11/25 18:39:33 by lucmansa         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:12:13 by lucmansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ char	*ft_strjoin(char *s1, char *s2, int n)
 	i = 0;
 	if (!s1)
 	{
-		res = calloc(sizeof(char), n + 1);
+		res = ft_calloc(sizeof(char), n + 1);
 		ft_strlcpy(res, s2, n + 1);
 		return (res);
 	}
 	len = ft_strchr(s1, '\0') + n;
 	res = ft_calloc(sizeof(char), len + 1);
 	if (!res)
-		return (NULL);
+		return (free(s1), NULL);
 	ft_strlcpy(res, s1, ft_strchr(s1, '\0') + 1);
 	while (res[i])
 		i++;
